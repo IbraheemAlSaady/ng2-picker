@@ -1,0 +1,26 @@
+<h1>
+  <!--<div style="width: 50px; height: 50px; background-color: red; margin-left: 70px" 
+       date-picker format="YYYY/MM/DD"></div>-->
+
+  <!--<time-picker [(ngModel)]="time"></time-picker>
+
+  <span>{{ time }} awdawd</span>-->
+
+</h1>
+
+<span>{{ date.value }} </span>
+
+<input type="text" [(ngModel)]="date.value" />
+<button (click)="change(date)">change</button>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-offset-4 col-sm-2">
+      <date-picker format="YYYY-MM-DD" 
+        className="form-control" 
+        autoClose="true" 
+        minDate="{{minDate}}"
+        maxDate= "{{maxDate}}"
+        [(ngModel)]="date"></date-picker>
+    </div>
+  </div>
+<div>

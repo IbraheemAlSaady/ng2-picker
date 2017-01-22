@@ -1,0 +1,88 @@
+<div>
+    <input type="text" [(ngModel)]="date.value" (click)="toggle()" class="simple-picker {{ options.className }}" />
+    <div class="simple-picker-container" [style.display]="view.isOpen ? 'block' : 'none'">
+        <div class="simple-picker-calendar-view" *ngIf="view.view === 'days'">
+            <div class="simple-picker-calendar-header-container">
+                <div class="simple-picker-navigation-arrow" (click)="prevMonth()">
+                    <div class="simple-picker-arrow-left"></div>
+                </div>
+                <div class="simple-picker-calendar-header" (click)="openMonthPicker()">
+                    {{ getSelectedMonth() }} - {{ currentDate.year() }}
+                </div>
+                <div class="simple-picker-navigation-arrow" (click)="nextMonth()">
+                    <div class="simple-picker-arrow-right"></div>
+                </div>
+            </div>
+            <table class="simple-picker-table">
+                <tbody class="simple-picker-table-body">
+                    <tr class="simple-picker-row">
+                        <td class="simple-picker-column simple-container-day-name" *ngFor="let weekday of view.weekdays">
+                            {{ weekday }}
+                        </td>
+                    </tr>
+                    <tr class="simple-picker-row" *ngFor="let row of view.sets.dayView">
+                        <td class="simple-picker-column" *ngFor="let d of row.data" 
+                            [ngClass]="{'simple-container-day': !d.hidden, 'simple-container-selected': d.selected}"
+                            (click)="selectDate(d)">
+                            <span *ngIf="d.day > 0">{{ d.day }}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="view.view==='months'">
+            <div class="simple-picker-calendar-header-container">
+                <div class="simple-picker-navigation-arrow" (click)="prevYear()">
+                    <span class="ion-ios-arrow-thin-left"></span>
+                </div>
+                <div class="simple-picker-calendar-header" (click)="openYearPicker()">
+                    {{ currentDate.year() }}
+                </div>
+                <div class="simple-picker-navigation-arrow" (click)="nextYear()">
+                    <span class="ion-ios-arrow-thin-right"></span>
+                </div>
+            </div>
+
+            <table class="simple-picker-table">
+                <tbody class="simple-picker-table-body">
+                    <tr class="simple-picker-row" *ngFor="let row of view.sets.monthView">
+                        <td class="simple-picker-column simple-picker-month" 
+                        *ngFor="let month of row.data" 
+                        [ngClass]="{'simple-container-selected': isMonthSelected(month)}"
+                        (click)="selectMonth(month)">
+                            {{ month }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div *ngIf="view.view==='years'">
+            <div class="simple-picker-calendar-header-container">
+                <div class="simple-picker-navigation-arrow" (click)="prevYears()">
+                    <span class="ion-ios-arrow-thin-left"></span>
+                </div>
+                <div class="simple-picker-calendar-header">
+                    {{ view.years.min }} - {{ view.years.max }}
+                </div>
+                <div class="simple-picker-navigation-arrow" (click)="nextYears()">
+                    <span class="ion-ios-arrow-thin-right"></span>
+                </div>
+            </div>
+
+            <table class="simple-picker-table">
+                <tbody class="simple-picker-table-body">
+                    <tr class="simple-picker-row" *ngFor="let row of view.sets.yearView">
+                        <td class="simple-picker-column simple-picker-year" 
+                            *ngFor="let year of row.data" 
+                            [ngClass]="{'simple-container-selected': year === this.date.year}"
+                            (click)="selectYear(year)">
+                            {{ year }}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
